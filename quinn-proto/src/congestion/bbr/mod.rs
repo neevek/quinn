@@ -622,13 +622,14 @@ fn calculate_min_window(current_mtu: u64) -> u64 {
 
 // The gain used for the STARTUP, equal to 2/ln(2).
 const K_DEFAULT_HIGH_GAIN: f32 = 2.885;
-// The newly derived CWND gain for STARTUP, 2.
-const K_DERIVED_HIGH_CWNDGAIN: f32 = 2.0;
-// The cycle of gains used during the ProbeBw stage.
-const K_PACING_GAIN: [f32; 8] = [1.25, 0.75, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+// The newly derived CWND gain for STARTUP, adjusted for high loss/latency.
+const K_DERIVED_HIGH_CWNDGAIN: f32 = 1.8; // Reduced from 2.0 for stability
+// The cycle of gains used during the ProbeBw stage, adjusted for high loss/latency.
+const K_PACING_GAIN: [f32; 8] = [1.15, 0.85, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; // Less aggressive probe/drain
 
 const K_STARTUP_GROWTH_TARGET: f32 = 1.25;
-const K_ROUND_TRIPS_WITHOUT_GROWTH_BEFORE_EXITING_STARTUP: u8 = 3;
+// Increased rounds before exiting startup to be more resilient to loss-induced stalls.
+const K_ROUND_TRIPS_WITHOUT_GROWTH_BEFORE_EXITING_STARTUP: u8 = 4; // Increased from 3
 
 // Do not allow initial congestion window to be greater than 200 packets.
 const K_MAX_INITIAL_CONGESTION_WINDOW: u64 = 200;
