@@ -19,6 +19,7 @@ pub mod noprotection;
 pub enum CongestionAlgorithm {
     Cubic,
     Bbr,
+    BbrV2,
     NewReno,
 }
 
@@ -27,6 +28,7 @@ impl CongestionAlgorithm {
         match self {
             CongestionAlgorithm::Cubic => Arc::new(congestion::CubicConfig::default()),
             CongestionAlgorithm::Bbr => Arc::new(congestion::BbrConfig::default()),
+            CongestionAlgorithm::BbrV2 => Arc::new(congestion::BbrV2Config::default()),
             CongestionAlgorithm::NewReno => Arc::new(congestion::NewRenoConfig::default()),
         }
     }

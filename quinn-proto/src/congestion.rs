@@ -6,10 +6,12 @@ use std::any::Any;
 use std::sync::Arc;
 
 mod bbr;
+mod bbrv2;
 mod cubic;
 mod new_reno;
 
 pub use bbr::{Bbr, BbrConfig};
+pub use bbrv2::{BbrV2, BbrV2Config};
 pub use cubic::{Cubic, CubicConfig};
 pub use new_reno::{NewReno, NewRenoConfig};
 
